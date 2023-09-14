@@ -1,9 +1,8 @@
 import './index.css'
 
-const Language = props => {
-  const {details} = props
-  const {imageUrl, imageAltText} = details
-
+const LanguageItem = props => {
+  const {languageDetails} = props
+  const {imageUrl, imageAltText} = languageDetails
   return (
     <>
       <li className="item-container">
@@ -12,4 +11,5 @@ const Language = props => {
     </>
   )
 }
-export default Language
+
+export default LanguageItem

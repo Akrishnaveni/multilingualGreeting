@@ -1,7 +1,9 @@
 import {Component} from 'react'
-import './App.css'
+
 import Tabs from './components/Tabs'
-import Language from './components/Language'
+import LanguageItem from './components/Language'
+
+import './App.css'
 
 const languageGreetingsList = [
   {
@@ -29,43 +31,46 @@ const languageGreetingsList = [
 
 // Replace your code here
 class App extends Component {
-  state = {activeTabId: languageGreetingsList[0].id}
-
-  onClickedTab = id => {
-    this.setState({activeTabId: id})
+  state = {
+    activeTabId: languageGreetingsList[0].id,
   }
 
-  getFilterTab = () => {
-    const {activeTabId} = this.state
+  clickTabItem = tabValue => {
+    this.setState({activeTabId: tabValue})
+  }
 
-    const filterData = languageGreetingsList.fiter(
-      each => each.id === activeTabId,
+  getFilteredProjects = () => {
+    const {activeTabId} = this.state
+    const filteredProjects = languageGreetingsList.filter(
+      eachDetails => eachDetails.id === activeTabId,
     )
-    return filterData
+    return filteredProjects
   }
 
   render() {
     const {activeTabId} = this.state
-    const filterLanguage = this.getFilterTab()
+    const filteredProjects = this.getFilteredProjects()
 
     return (
-      <div className="app-container">
+      <div className="main-container">
         <h1 className="heading">Multilingual Greetings</h1>
         <ul className="tabs-container">
-          {languageGreetingsList.map(eachTab => (
+          {languageGreetingsList.map(tabDetails => (
             <Tabs
-              id={eachTab.id}
-              GreetingDetails={eachTab}
-              onClickedTab={this.onClickedTab}
-              isActive={activeTabId === eachTab.id}
+              key={tabDetails.id}
+              tabDetails={tabDetails}
+              clickTabItem={this.clickTabItem}
+              isActive={activeTabId === tabDetails.id}
             />
           ))}
         </ul>
-        {filterLanguage.map(eachItem => (
-          <Language key={eachItem.id} details={eachItem} />
+
+        {filteredProjects.map(eachItem => (
+          <LanguageItem key={eachItem.id} languageDetails={eachItem} />
         ))}
       </div>
     )
   }
 }
+
 export default App
